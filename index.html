@@ -3,230 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neater OS - System 5</title>
+  <title>Neature OS - Android 8</title>
   <style>
-    /* Classic Mac System 5 Monochrome Styling */
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Roboto', 'Segoe UI', sans-serif; }
     
     body {
-      font-family: "Geneva", "Chicago", "Courier New", sans-serif;
-      background-color: #777; /* Classic Mac desktop pattern background */
-      background-image: radial-gradient(#000 15%, transparent 16%);
-      background-size: 4px 4px;
+      background: linear-gradient(135deg, #1a237e 0%, #311b92 50%, #880e4f 100%);
       height: 100vh;
-      overflow: hidden;
-    }
-
-    /* Top Mac Menu Bar */
-    #menu-bar {
-      height: 20px;
-      background: #fff;
-      border-bottom: 2px solid #000;
       display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      padding: 0 10px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .menu-item {
-      padding: 0 10px;
-      cursor: pointer;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .menu-item:hover {
-      background: #000;
       color: #fff;
     }
 
-    /* Desktop Area */
-    #desktop {
-      width: 100vw;
-      height: calc(100vh - 20px);
-      position: relative;
-    }
-
-    /* System 5 Window Frame */
-    .mac-window {
-      position: absolute;
-      width: 450px;
-      height: 320px;
-      background: #fff;
-      border: 2px solid #000;
-      box-shadow: 3px 3px 0px #000;
+    /* Top Status Bar */
+    #status-bar {
+      width: 100%;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.3);
       display: flex;
-      flex-direction: column;
-    }
-
-    /* Titlebar with Classic Pinstripes */
-    .mac-titlebar {
-      height: 18px;
-      background: repeating-linear-gradient(
-        0deg,
-        #fff,
-        #fff 1px,
-        #000 1px,
-        #000 2px
-      );
-      border-bottom: 2px solid #000;
-      display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0 4px;
-      cursor: move;
-    }
-
-    .close-box {
-      width: 11px;
-      height: 11px;
-      background: #fff;
-      border: 1px solid #000;
-      cursor: pointer;
-    }
-
-    .window-title {
-      background: #fff;
-      padding: 0 8px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .mac-window-body {
-      flex-grow: 1;
-      padding: 8px;
-      overflow: auto;
-      background: #fff;
-      color: #000;
-    }
-
-    /* Desktop Icons */
-    .icon {
-      width: 70px;
-      text-align: center;
-      position: absolute;
-      top: 30px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .icon-img {
-      width: 32px;
-      height: 32px;
-      border: 2px solid #000;
-      background: #fff;
-      margin: 0 auto 4px auto;
-      display: flex;
       align-items: center;
-      justify-content: center;
+      padding: 0 12px;
+      font-size: 12px;
+    }
+
+    /* Lockscreen Widget */
+    .lock-container {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    #clock {
+      font-size: 64px;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    #date {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-top: -8px;
+    }
+
+    .os-title {
+      margin-top: 30px;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* Swipe / Click Unlock Button */
+    .unlock-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 28px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s, transform 0.1s;
+      margin-bottom: 80px;
+    }
+
+    .unlock-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .unlock-btn:active {
+      transform: scale(0.96);
     }
   </style>
-  <!-- Hooking into your friend's v86 build files from your repo -->
-  <script src="build/libv86.js"></script>
 </head>
 <body>
 
-  <!-- Menu Bar -->
-  <div id="menu-bar">
-    <div class="menu-item" style="font-size: 15px;"></div>
-    <div class="menu-item">File</div>
-    <div class="menu-item">Edit</div>
-    <div class="menu-item">View</div>
-    <div class="menu-item" onclick="launchV86()">Run x86 Engine</div>
+  <!-- Android Status Bar -->
+  <div id="status-bar">
+    <div><span>📶</span></div>
+    <div><span id="small-clock">12:00</span> | <span>🔋 100%</span></div>
   </div>
 
-  <div id="desktop">
-    <!-- Desktop Disk Icon -->
-    <div class="icon" onclick="openFolder()">
-      <div class="icon-img">💾</div>
-      <div>Feater OS</div>
-    </div>
+  <!-- Lockscreen Widget -->
+  <div class="lock-container">
+    <div id="clock">12:00</div>
+    <div id="date">Thursday, September 24</div>
+    <div class="os-title">Neature OS (Android 8.0)</div>
   </div>
+
+  <!-- Unlock Button -->
+  <button class="unlock-btn" onclick="window.location.href='main.html'">
+    🔓 Unlock Neature OS
+  </button>
 
   <script>
-    let zIndexCounter = 10;
-
-    function createWindow(title, content) {
-      const desktop = document.getElementById('desktop');
-      const win = document.createElement('div');
-      win.className = 'mac-window';
-      win.style.left = '60px';
-      win.style.top = '40px';
-      win.style.zIndex = ++zIndexCounter;
-
-      win.innerHTML = `
-        <div class="mac-titlebar">
-          <div class="close-box" onclick="this.closest('.mac-window').remove()"></div>
-          <div class="window-title">${title}</div>
-          <div style="width:11px;"></div>
-        </div>
-        <div class="mac-window-body">${content}</div>
-      `;
-
-      win.addEventListener('mousedown', () => win.style.zIndex = ++zIndexCounter);
-      makeDraggable(win);
-      desktop.appendChild(win);
-      return win;
+    function updateTime() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+      
+      document.getElementById('clock').textContent = timeStr;
+      document.getElementById('small-clock').textContent = timeStr;
+      document.getElementById('date').textContent = dateStr;
     }
-
-    function openFolder() {
-      createWindow('Feater OS - System Folder', `
-        <p><b>Welcome to Feater OS</b></p>
-        <p style="margin-top:8px;">System 5 Web Interface active.</p>
-        <hr style="margin: 10px 0; border: 1px solid #000;">
-        <p>Ready to load emulators or web displays.</p>
-      `);
-    }
-
-    // Connects to your friend's v86 files shown in your screenshots
-    function launchV86() {
-      const win = createWindow('x86 Emulator Display', `
-        <div id="screen_container" style="background:#000; width:100%; height:100%;">
-          <div style="white-space: pre; font-family: monospace;"></div>
-          <canvas style="display: none"></canvas>
-        </div>
-      `);
-
-      if (typeof V86Starter !== 'undefined') {
-        const emulator = new V86Starter({
-          wasm_path: "build/v86.wasm",
-          memory_size: 32 * 1024 * 1024,
-          vga_bios: { url: "build/vgabios.bin" },
-          bios: { url: "build/seabios.bin" },
-          screen_container: win.querySelector("#screen_container"),
-          autostart: true,
-        });
-      } else {
-        win.querySelector('.mac-window-body').innerHTML = "<p>v86 script loading... Ensure 'build/libv86.js' is accessible.</p>";
-      }
-    }
-
-    function makeDraggable(win) {
-      const titlebar = win.querySelector('.mac-titlebar');
-      let x = 0, y = 0, mouseX = 0, mouseY = 0;
-
-      titlebar.onmousedown = (e) => {
-        if (e.target.classList.contains('close-box')) return;
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        document.onmousemove = (e) => {
-          x = mouseX - e.clientX;
-          y = mouseY - e.clientY;
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          win.style.top = (win.offsetTop - y) + "px";
-          win.style.left = (win.offsetLeft - x) + "px";
-        };
-        document.onmouseup = () => {
-          document.onmousemove = null;
-          document.onmouseup = null;
-        };
-      };
-    }
+    setInterval(updateTime, 1000);
+    updateTime();
   </script>
 </body>
 </html>
