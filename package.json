@@ -1,0 +1,13 @@
+{
+  "name": "neature-os",
+  "version": "1.0.0",
+  "description": "Neature OS - System 5 Web Interface",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
+
