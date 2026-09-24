@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neature OS - Main Workspace</title>
+  <title>Neature OS - New Window</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     
@@ -13,204 +13,91 @@
       background-image: radial-gradient(#000 15%, transparent 16%);
       background-size: 4px 4px;
       height: 100vh;
-      overflow: hidden;
-    }
-
-    #menu-bar {
-      height: 20px;
-      background: #fff;
-      border-bottom: 2px solid #000;
       display: flex;
       align-items: center;
-      padding: 0 10px;
-      font-size: 13px;
-      font-weight: bold;
+      justify-content: center;
     }
 
-    .menu-item {
-      padding: 0 10px;
-      cursor: pointer;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .menu-item:hover {
-      background: #000;
-      color: #fff;
-    }
-
-    #desktop {
-      width: 100vw;
-      height: calc(100vh - 20px);
-      position: relative;
-    }
-
-    .mac-window {
-      position: absolute;
-      width: 450px;
-      height: 320px;
+    .mac-dialog {
+      width: 380px;
       background: #fff;
       border: 2px solid #000;
-      box-shadow: 3px 3px 0px #000;
-      display: flex;
-      flex-direction: column;
+      box-shadow: 4px 4px 0px #000;
+      padding: 12px;
     }
 
     .mac-titlebar {
       height: 18px;
       background: repeating-linear-gradient(0deg, #fff, #fff 1px, #000 1px, #000 2px);
       border-bottom: 2px solid #000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 4px;
-      cursor: move;
-    }
-
-    .close-box {
-      width: 11px;
-      height: 11px;
-      background: #fff;
-      border: 1px solid #000;
-      cursor: pointer;
-    }
-
-    .window-title {
-      background: #fff;
-      padding: 0 8px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .mac-window-body {
-      flex-grow: 1;
-      padding: 8px;
-      overflow: auto;
-      background: #fff;
-      color: #000;
-    }
-
-    .icon {
-      width: 70px;
-      text-align: center;
-      position: absolute;
-      top: 30px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .icon-img {
-      width: 32px;
-      height: 32px;
-      border: 2px solid #000;
-      background: #fff;
-      margin: 0 auto 4px auto;
+      margin: -12px -12px 12px -12px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .title-text {
+      background: #fff;
+      padding: 0 6px;
+    }
+
+    p { font-size: 13px; margin-bottom: 12px; }
+
+    input {
+      width: 100%;
+      padding: 4px;
+      border: 2px solid #000;
+      font-family: inherit;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    button {
+      background: #fff;
+      border: 2px solid #000;
+      padding: 4px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    button:active {
+      background: #000;
+      color: #fff;
     }
   </style>
-  <script src="build/libv86.js"></script>
 </head>
 <body>
 
-  <div id="menu-bar">
-    <div class="menu-item" style="font-size: 15px;"></div>
-    <div class="menu-item" style="font-weight: bold;">Neature OS</div>
-    <div class="menu-item" onclick="window.location.href='index.html'">Index</div>
-    <div class="menu-item" onclick="window.location.href='new.html'">New File</div>
-    <div class="menu-item" onclick="launchV86()">Launch x86</div>
-  </div>
+  <div class="mac-dialog">
+    <div class="mac-titlebar">
+      <span class="title-text">Neature OS - Launch Window</span>
+    </div>
+    
+    <p>Enter a website URL to open in a Neature OS virtual window:</p>
+    <input type="text" id="target-url" value="https://wikipedia.org">
 
-  <div id="desktop">
-    <div class="icon" onclick="openSystemFolder()">
-      <div class="icon-img">💾</div>
-      <div>Neature OS</div>
+    <div class="btn-group">
+      <button onclick="window.location.href='main.html'">Cancel</button>
+      <button onclick="launchTarget()">Launch Window</button>
     </div>
   </div>
 
   <script>
-    let zIndexCounter = 10;
-
-    function createWindow(title, content) {
-      const desktop = document.getElementById('desktop');
-      const win = document.createElement('div');
-      win.className = 'mac-window';
-      win.style.left = '80px';
-      win.style.top = '50px';
-      win.style.zIndex = ++zIndexCounter;
-
-      win.innerHTML = `
-        <div class="mac-titlebar">
-          <div class="close-box" onclick="this.closest('.mac-window').remove()"></div>
-          <div class="window-title">${title}</div>
-          <div style="width:11px;"></div>
-        </div>
-        <div class="mac-window-body">${content}</div>
-      `;
-
-      win.addEventListener('mousedown', () => win.style.zIndex = ++zIndexCounter);
-      makeDraggable(win);
-      desktop.appendChild(win);
-      return win;
+    function launchTarget() {
+      const url = document.getElementById('target-url').value;
+      window.location.href = `main.html?launch=${encodeURIComponent(url)}`;
     }
-
-    function openSystemFolder() {
-      createWindow('Neature OS - System 5', `
-        <p><b>Welcome to Neature OS</b></p>
-        <p style="margin-top:5px;">System 5 Web Interface active.</p>
-        <hr style="margin: 10px 0; border: 1px solid #000;">
-        <p>Neature OS is ready to run web apps and launch emulators.</p>
-      `);
-    }
-
-    function launchV86() {
-      const win = createWindow('Neature OS - x86 Engine', `
-        <div id="screen_container" style="background:#000; width:100%; height:100%;">
-          <div style="white-space: pre; font-family: monospace;"></div>
-          <canvas style="display: none"></canvas>
-        </div>
-      `);
-
-      if (typeof V86Starter !== 'undefined') {
-        new V86Starter({
-          wasm_path: "build/v86.wasm",
-          memory_size: 32 * 1024 * 1024,
-          vga_bios: { url: "build/vgabios.bin" },
-          bios: { url: "build/seabios.bin" },
-          screen_container: win.querySelector("#screen_container"),
-          autostart: true,
-        });
-      }
-    }
-
-    function makeDraggable(win) {
-      const titlebar = win.querySelector('.mac-titlebar');
-      let x = 0, y = 0, mouseX = 0, mouseY = 0;
-      titlebar.onmousedown = (e) => {
-        if (e.target.classList.contains('close-box')) return;
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        document.onmousemove = (e) => {
-          x = mouseX - e.clientX;
-          y = mouseY - e.clientY;
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          win.style.top = (win.offsetTop - y) + "px";
-          win.style.left = (win.offsetLeft - x) + "px";
-        };
-        document.onmouseup = () => {
-          document.onmousemove = null;
-          document.onmouseup = null;
-        };
-      };
-    }
-
-    // Auto-open system folder on load
-    openSystemFolder();
   </script>
 </body>
 </html>
