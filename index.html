@@ -1,359 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Experience the ultimate V86 x86 emulator web interface featuring 15+ vintage operating systems running directly in your browser. Launch Windows 1.01, Windows 98, Windows NT 4.0, Windows NT 5.0, Windows 2000, Windows XP, ReactOS, Haiku, Android x86, and Damn Small Linux without any downloads or installations. Our comprehensive emulation platform uses cutting-edge WebAssembly technology to deliver near-native performance for retro computing enthusiasts, educators, and software preservation specialists. Features include pre-configured operating systems with optimal memory settings, custom OS upload capabilities for .img and .iso files, advanced Windows NT compatibility modes with CPUID configuration, full mouse and keyboard capture with special key injection, hardware-accurate scancode generation, and comprehensive system controls. Perfect for educational purposes, software testing, vintage gaming, computing history exploration, and digital preservation projects. The interface supports configurable RAM from 128MB to 1GB, video memory options up to 64MB, flexible boot order selection, and real-time emulator status monitoring. Compatible with all modern browsers including Chrome, Firefox, Safari, and Edge. No plugins required - just open and start computing with authentic vintage operating system experiences powered by the renowned V86 emulator engine.">
-    <meta name="keywords" content="V86, x86 emulator, vintage OS, Windows 98, Windows XP, ReactOS, browser emulator, retro computing, operating system emulation">
-    <meta name="author" content="V86 Web Interface">
-    <meta name="robots" content="index, follow">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neater OS - System 5</title>
+  <style>
+    /* Classic Mac System 5 Monochrome Styling */
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://oses.ioblako.com/">
-    <meta property="og:title" content="V86 x86 Emulator - Run Vintage Operating Systems in Browser">
-    <meta property="og:description" content="Experience classic operating systems like Windows 98, XP, and ReactOS directly in your browser. No downloads required - powered by WebAssembly.">
-    <meta property="og:image" content="https://oses.ioblako.com/assets/og-image.png">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://oses.ioblako.com/">
-    <meta property="twitter:title" content="V86 x86 Emulator - Run Vintage Operating Systems in Browser">
-    <meta property="twitter:description" content="Experience classic operating systems like Windows 98, XP, and ReactOS directly in your browser. No downloads required - powered by WebAssembly.">
-    <meta property="twitter:image" content="https://oses.ioblako.com/assets/og-image.png">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://oses.ioblako.com/">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    
-    <!-- Schema.org structured data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "V86 x86 Emulator Web Interface",
-        "description": "Web-based x86 emulator running vintage operating systems in browser using WebAssembly",
-        "url": "https://oses.ioblako.com/",
-        "applicationCategory": "EmulatorApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "author": {
-            "@type": "Person",
-            "name": "copy (Fabian Hemmer)"
-        },
-        "softwareVersion": "1.0",
-        "datePublished": "2025-09-18",
-        "programmingLanguage": ["JavaScript", "WebAssembly"],
-        "featureList": [
-            "x86 Processor Emulation",
-            "Multiple Operating Systems",
-            "Browser-based Execution",
-            "No Installation Required",
-            "Vintage OS Preservation"
-        ]
+    body {
+      font-family: "Geneva", "Chicago", "Courier New", sans-serif;
+      background-color: #777; /* Classic Mac desktop pattern background */
+      background-image: radial-gradient(#000 15%, transparent 16%);
+      background-size: 4px 4px;
+      height: 100vh;
+      overflow: hidden;
     }
-    </script>
-    
-    <title>V86 x86 Emulator - Run Vintage Operating Systems in Your Browser</title>
-    
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: white;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        
-        .hero {
-            margin-bottom: 60px;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 60px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .cta-button.primary {
-            background: rgba(255, 255, 255, 0.9);
-            color: #764ba2;
-        }
-        
-        .cta-button.primary:hover {
-            background: white;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        
-        .feature h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        .feature p {
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-        
-        .os-preview {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 40px;
-        }
-        
-        .os-preview h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        
-        .os-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .os-tag {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .os-tag.clickable {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .os-tag.clickable:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .footer {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            opacity: 0.8;
-        }
-        
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
-        
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cta-button {
-                width: 250px;
-            }
-            body {
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-            .container {
-                padding: 24px 16px;
-            }
-            .features {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .os-preview {
-                padding: 20px;
-            }
-            .os-list {
-                gap: 10px;
-            }
-            .os-tag {
-                font-size: 0.85rem;
-                padding: 6px 12px;
-            }
-        }
-    </style>
+
+    /* Top Mac Menu Bar */
+    #menu-bar {
+      height: 20px;
+      background: #fff;
+      border-bottom: 2px solid #000;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .menu-item {
+      padding: 0 10px;
+      cursor: pointer;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .menu-item:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    /* Desktop Area */
+    #desktop {
+      width: 100vw;
+      height: calc(100vh - 20px);
+      position: relative;
+    }
+
+    /* System 5 Window Frame */
+    .mac-window {
+      position: absolute;
+      width: 450px;
+      height: 320px;
+      background: #fff;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0px #000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Titlebar with Classic Pinstripes */
+    .mac-titlebar {
+      height: 18px;
+      background: repeating-linear-gradient(
+        0deg,
+        #fff,
+        #fff 1px,
+        #000 1px,
+        #000 2px
+      );
+      border-bottom: 2px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+      cursor: move;
+    }
+
+    .close-box {
+      width: 11px;
+      height: 11px;
+      background: #fff;
+      border: 1px solid #000;
+      cursor: pointer;
+    }
+
+    .window-title {
+      background: #fff;
+      padding: 0 8px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .mac-window-body {
+      flex-grow: 1;
+      padding: 8px;
+      overflow: auto;
+      background: #fff;
+      color: #000;
+    }
+
+    /* Desktop Icons */
+    .icon {
+      width: 70px;
+      text-align: center;
+      position: absolute;
+      top: 30px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .icon-img {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #000;
+      background: #fff;
+      margin: 0 auto 4px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <!-- Hooking into your friend's v86 build files from your repo -->
+  <script src="build/libv86.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="hero">
-            <h1>V86 x86 Emulator</h1>
-            <p>Experience vintage operating systems directly in your browser. No downloads, no installation - just pure nostalgia powered by cutting-edge WebAssembly technology.</p>
-        </div>
-        
-        <div class="cta-buttons">
-            <a href="new.html" class="cta-button primary">🚀 Launch OS Collection</a>
-            <a href="main.html" class="cta-button">📁 Upload Custom OS</a>
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🖥️</div>
-                <h3>14+ Operating Systems</h3>
-                <p>Pre-configured collection from Windows 1.01 to modern alternatives like ReactOS and Haiku. Each system optimized for best performance.</p>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <h3>WebAssembly Powered</h3>
-                <p>Near-native performance using WebAssembly technology. Full x86 processor emulation running entirely in your browser.</p>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-icon">🎮</div>
-                <h3>Full Interaction</h3>
-                <p>Complete mouse and keyboard support with special key injection. Hardware-accurate scancode generation for perfect compatibility.</p>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-icon">💾</div>
-                <h3>Custom Upload</h3>
-                <p>Upload your own .img and .iso files. Configurable memory settings and boot order for maximum compatibility.</p>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-icon">🔧</div>
-                <h3>No Installation</h3>
-                <p>Everything runs in your browser. No plugins, no downloads, no security concerns. Just open and start computing.</p>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-icon">📚</div>
-                <h3>Educational Purpose</h3>
-                <p>Perfect for education, software preservation, and experiencing computing history. Learn how operating systems evolved.</p>
-            </div>
-        </div>
-        
-        <div class="os-preview">
-            <h2>Available Operating Systems</h2>
-            <p>Explore decades of computing history with our curated collection</p>
-            <div class="os-list">
-                <div class="os-tag">Windows 1.01</div>
-                <div class="os-tag">Windows 2.x</div>
-                <div class="os-tag">Windows 3.0/3.11</div>
-                <div class="os-tag">Windows 98</div>
-                <div class="os-tag clickable" onclick="launchWindowsNT()">Windows NT 4.0</div>
-                <div class="os-tag">Windows NT 5.0</div>
-                <div class="os-tag">Windows 2000</div>
-                <div class="os-tag">Windows XP</div>
-                <div class="os-tag">Windows CE 5.0</div>
-                <div class="os-tag">ReactOS</div>
-                <div class="os-tag">Haiku</div>
-                <div class="os-tag">Android x86</div>
-                <div class="os-tag">Damn Small Linux</div>
-                <div class="os-tag">Hiren's Boot CD</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>Powered by <a href="https://github.com/copy/v86" target="_blank">V86 Emulator</a> by <strong>copy (Fabian Hemmer)</strong></p>
-            <p><strong>GitHub Project:</strong> <a href="https://github.com/TheEvalon/x86" target="_blank">github.com/TheEvalon/x86</a></p>
-            <p>Educational and preservation purposes only • <a href="README.md">Documentation</a></p>
-            <p><strong>Side Project:</strong> <a href="https://games.ioblako.com" target="_blank">games.ioblako.com</a></p>
-            <p>Contact us: <a href="mailto:info@iOblako.com">info@iOblako.com</a></p>
-        </div>
-    </div>
 
-    <script>
-        function launchWindowsNT() {
-            // Redirect to new.html with Windows NT 4.0 auto-launch
-            // We'll use URL parameters to auto-launch the OS
-            window.location.href = 'new.html?autolaunch=windowsnt4';
-        }
-    </script>
+  <!-- Menu Bar -->
+  <div id="menu-bar">
+    <div class="menu-item" style="font-size: 15px;"></div>
+    <div class="menu-item">File</div>
+    <div class="menu-item">Edit</div>
+    <div class="menu-item">View</div>
+    <div class="menu-item" onclick="launchV86()">Run x86 Engine</div>
+  </div>
+
+  <div id="desktop">
+    <!-- Desktop Disk Icon -->
+    <div class="icon" onclick="openFolder()">
+      <div class="icon-img">💾</div>
+      <div>Feater OS</div>
+    </div>
+  </div>
+
+  <script>
+    let zIndexCounter = 10;
+
+    function createWindow(title, content) {
+      const desktop = document.getElementById('desktop');
+      const win = document.createElement('div');
+      win.className = 'mac-window';
+      win.style.left = '60px';
+      win.style.top = '40px';
+      win.style.zIndex = ++zIndexCounter;
+
+      win.innerHTML = `
+        <div class="mac-titlebar">
+          <div class="close-box" onclick="this.closest('.mac-window').remove()"></div>
+          <div class="window-title">${title}</div>
+          <div style="width:11px;"></div>
+        </div>
+        <div class="mac-window-body">${content}</div>
+      `;
+
+      win.addEventListener('mousedown', () => win.style.zIndex = ++zIndexCounter);
+      makeDraggable(win);
+      desktop.appendChild(win);
+      return win;
+    }
+
+    function openFolder() {
+      createWindow('Feater OS - System Folder', `
+        <p><b>Welcome to Feater OS</b></p>
+        <p style="margin-top:8px;">System 5 Web Interface active.</p>
+        <hr style="margin: 10px 0; border: 1px solid #000;">
+        <p>Ready to load emulators or web displays.</p>
+      `);
+    }
+
+    // Connects to your friend's v86 files shown in your screenshots
+    function launchV86() {
+      const win = createWindow('x86 Emulator Display', `
+        <div id="screen_container" style="background:#000; width:100%; height:100%;">
+          <div style="white-space: pre; font-family: monospace;"></div>
+          <canvas style="display: none"></canvas>
+        </div>
+      `);
+
+      if (typeof V86Starter !== 'undefined') {
+        const emulator = new V86Starter({
+          wasm_path: "build/v86.wasm",
+          memory_size: 32 * 1024 * 1024,
+          vga_bios: { url: "build/vgabios.bin" },
+          bios: { url: "build/seabios.bin" },
+          screen_container: win.querySelector("#screen_container"),
+          autostart: true,
+        });
+      } else {
+        win.querySelector('.mac-window-body').innerHTML = "<p>v86 script loading... Ensure 'build/libv86.js' is accessible.</p>";
+      }
+    }
+
+    function makeDraggable(win) {
+      const titlebar = win.querySelector('.mac-titlebar');
+      let x = 0, y = 0, mouseX = 0, mouseY = 0;
+
+      titlebar.onmousedown = (e) => {
+        if (e.target.classList.contains('close-box')) return;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        document.onmousemove = (e) => {
+          x = mouseX - e.clientX;
+          y = mouseY - e.clientY;
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          win.style.top = (win.offsetTop - y) + "px";
+          win.style.left = (win.offsetLeft - x) + "px";
+        };
+        document.onmouseup = () => {
+          document.onmousemove = null;
+          document.onmouseup = null;
+        };
+      };
+    }
+  </script>
 </body>
 </html>
