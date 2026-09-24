@@ -2,15 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Neature OS - Android 8</title>
+  <!-- Google Roboto Font for real Android feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Roboto', 'Segoe UI', sans-serif; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      user-select: none; 
+      -webkit-user-select: none;
+      font-family: 'Roboto', sans-serif; 
+      touch-action: manipulation;
+    }
     
     body {
-      /* Android 8 Oreo Style Wallpaper */
+      /* Android 8 Oreo Wallpaper */
       background: linear-gradient(135deg, #1a237e 0%, #311b92 50%, #880e4f 100%);
       height: 100vh;
+      width: 100vw;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -18,32 +29,28 @@
 
     /* Android Status Bar */
     #status-bar {
-      height: 24px;
-      background: rgba(0, 0, 0, 0.3);
+      height: 28px;
+      background: rgba(0, 0, 0, 0.4);
       color: #fff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 12px;
+      padding: 0 16px;
       font-size: 12px;
+      font-weight: 500;
       z-index: 10000;
     }
 
-    .status-left, .status-right {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    /* Desktop Grid Area */
+    /* Desktop App Grid */
     #desktop {
       flex-grow: 1;
       position: relative;
       padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      grid-template-rows: repeat(auto-fill, minmax(90px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      grid-auto-rows: 90px;
       gap: 15px;
+      overflow: hidden;
     }
 
     /* App Icons */
@@ -59,49 +66,52 @@
     }
 
     .app-icon-bg {
-      width: 52px;
-      height: 52px;
+      width: 54px;
+      height: 54px;
       background: #ffffff;
-      border-radius: 50%; /* Android adaptive round icons */
+      border-radius: 50%; /* Android 8 adaptive icon style */
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 26px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       margin-bottom: 6px;
-      transition: transform 0.1s;
     }
 
     .app-icon:active .app-icon-bg {
-      transform: scale(0.92);
+      transform: scale(0.9);
+      opacity: 0.8;
     }
 
-    /* Android 8 Window / App Cards */
+    /* Mobile Responsive Android Window Card */
     .android-window {
       position: absolute;
-      width: 420px;
-      height: 340px;
-      background: #fafafa;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      width: calc(100vw - 32px);
+      max-width: 420px;
+      height: 60vh;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.2);
+      left: 16px;
+      top: 40px;
+      z-index: 100;
     }
 
-    /* Android Card Header */
+    /* Android Header Bar */
     .android-header {
-      height: 48px;
-      background: #3f51b5; /* Android Material Blue */
+      height: 52px;
+      background: #3f51b5;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
       font-weight: 500;
-      font-size: 15px;
-      cursor: move;
+      font-size: 16px;
+      touch-action: none; /* Prevents scroll while dragging header */
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
@@ -109,38 +119,39 @@
       background: transparent;
       border: none;
       color: #fff;
-      font-size: 18px;
+      font-size: 20px;
+      padding: 8px;
       cursor: pointer;
     }
 
     .android-window-body {
       flex-grow: 1;
       padding: 16px;
-      overflow: auto;
+      overflow-y: auto;
       color: #212121;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Android Navigation Bar (Bottom) */
     #nav-bar {
       height: 48px;
-      background: rgba(0, 0, 0, 0.85);
+      background: #000000;
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
-      gap: 60px;
       z-index: 10000;
     }
 
     .nav-btn {
       color: #fff;
       font-size: 20px;
+      padding: 10px 25px;
       cursor: pointer;
       opacity: 0.85;
-      padding: 10px;
     }
 
-    .nav-btn:hover {
-      opacity: 1;
+    .nav-btn:active {
+      opacity: 0.4;
     }
   </style>
   <script src="build/libv86.js"></script>
@@ -149,49 +160,41 @@
 
   <!-- Android 8 Status Bar -->
   <div id="status-bar">
-    <div class="status-left">
-      <span id="clock">12:00</span>
-    </div>
-    <div class="status-right">
+    <span id="clock">12:00</span>
+    <div>
       <span>📶</span>
-      <span>🔋 100%</span>
+      <span style="margin-left: 6px;">🔋 100%</span>
     </div>
   </div>
 
   <!-- Desktop App Grid -->
   <div id="desktop">
-    
-    <!-- System App Icon -->
     <div class="app-icon" onclick="openSystemInfo()">
       <div class="app-icon-bg" style="background: #2196F3; color: white;">⚙️</div>
       <span>Settings</span>
     </div>
 
-    <!-- Launcher App Icon -->
     <div class="app-icon" onclick="window.location.href='new.html'">
       <div class="app-icon-bg" style="background: #4CAF50; color: white;">🌐</div>
       <span>Browser</span>
     </div>
 
-    <!-- x86 Emulator Icon -->
     <div class="app-icon" onclick="launchV86()">
       <div class="app-icon-bg" style="background: #FF9800; color: white;">🤖</div>
       <span>x86 Engine</span>
     </div>
-
   </div>
 
-  <!-- Android 8 Navigation Bar (Back, Home, Recents) -->
+  <!-- Android Navigation Bar (Back, Home, Recents) -->
   <div id="nav-bar">
-    <div class="nav-btn" title="Back" onclick="closeTopWindow()">◁</div>
-    <div class="nav-btn" title="Home" onclick="closeAllWindows()">◯</div>
-    <div class="nav-btn" title="Recents" onclick="openSystemInfo()">▢</div>
+    <div class="nav-btn" onclick="closeTopWindow()">◁</div>
+    <div class="nav-btn" onclick="closeAllWindows()">◯</div>
+    <div class="nav-btn" onclick="openSystemInfo()">▢</div>
   </div>
 
   <script>
     let zIndexCounter = 10;
 
-    // Clock update
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -203,8 +206,6 @@
       const desktop = document.getElementById('desktop');
       const win = document.createElement('div');
       win.className = 'android-window';
-      win.style.left = '40px';
-      win.style.top = '30px';
       win.style.zIndex = ++zIndexCounter;
 
       win.innerHTML = `
@@ -215,8 +216,10 @@
         <div class="android-window-body">${content}</div>
       `;
 
+      win.addEventListener('touchstart', () => win.style.zIndex = ++zIndexCounter, {passive: true});
       win.addEventListener('mousedown', () => win.style.zIndex = ++zIndexCounter);
-      makeDraggable(win);
+      
+      makeDraggableMobile(win);
       desktop.appendChild(win);
       return win;
     }
@@ -224,9 +227,9 @@
     function openSystemInfo() {
       createWindow('Neature OS (Android 8.0)', `
         <h3 style="color: #3f51b5; margin-bottom: 8px;">Neature OS Oreo</h3>
-        <p style="color: #666; font-size: 14px;">Version: 8.0.0 (Oreo Web Edition)</p>
+        <p style="color: #666; font-size: 14px;">Version: 8.0.0 (Oreo Mobile Web)</p>
         <hr style="margin: 12px 0; border: none; border-top: 1px solid #ddd;">
-        <p>System memory configured and running web modules active.</p>
+        <p>Touch controls are active. Drag the blue title bar to move windows on your phone screen.</p>
       `);
     }
 
@@ -259,21 +262,52 @@
       document.querySelectorAll('.android-window').forEach(w => w.remove());
     }
 
-    function makeDraggable(win) {
+    // --- TOUCH & MOUSE DRAGGING SYSTEM ---
+    function makeDraggableMobile(win) {
       const header = win.querySelector('.android-header');
-      let x = 0, y = 0, mouseX = 0, mouseY = 0;
+      let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+
+      // Mobile Touch Handling
+      header.addEventListener('touchstart', (e) => {
+        if (e.target.classList.contains('close-btn')) return;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        initialLeft = win.offsetLeft;
+        initialTop = win.offsetTop;
+
+        function onTouchMove(e) {
+          const touch = e.touches[0];
+          const deltaX = touch.clientX - startX;
+          const deltaY = touch.clientY - startY;
+          win.style.left = (initialLeft + deltaX) + 'px';
+          win.style.top = (initialTop + deltaY) + 'px';
+        }
+
+        function onTouchEnd() {
+          document.removeEventListener('touchmove', onTouchMove);
+          document.removeEventListener('touchend', onTouchEnd);
+        }
+
+        document.addEventListener('touchmove', onTouchMove, { passive: false });
+        document.addEventListener('touchend', onTouchEnd);
+      }, { passive: true });
+
+      // Desktop Mouse Handling Fallback
       header.onmousedown = (e) => {
         if (e.target.classList.contains('close-btn')) return;
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        let mouseX = e.clientX;
+        let mouseY = e.clientY;
+
         document.onmousemove = (e) => {
-          x = mouseX - e.clientX;
-          y = mouseY - e.clientY;
+          let deltaX = mouseX - e.clientX;
+          let deltaY = mouseY - e.clientY;
           mouseX = e.clientX;
           mouseY = e.clientY;
-          win.style.top = (win.offsetTop - y) + "px";
-          win.style.left = (win.offsetLeft - x) + "px";
+          win.style.top = (win.offsetTop - deltaY) + "px";
+          win.style.left = (win.offsetLeft - deltaX) + "px";
         };
+
         document.onmouseup = () => {
           document.onmousemove = null;
           document.onmouseup = null;
